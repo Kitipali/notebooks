@@ -8,6 +8,10 @@ This repository contains the example code from our O'Reilly book [Natural Langua
 
 You can run these notebooks on cloud platforms like [Google Colab](https://colab.research.google.com/) or your local machine. Note that most chapters require a GPU to run in a reasonable amount of time, so we recommend one of the cloud platforms as they come pre-installed with CUDA.
 
+> ⚠️ **TensorFlow sections are no longer tested.** The book includes optional TensorFlow code paths (e.g. `TFAutoModel.from_pretrained(..., from_pt=True)` in Chapter 2). These were written against TF 2.x with classic Keras 2 and break against current Keras 3. The PyTorch path is what we maintain; if you need the TF examples to run, you'll have to install a compatible older TensorFlow/Keras yourself.
+
+> ⚠️ **Chapter 7 (Question Answering) is no longer maintained.** It relies on `farm-haystack` 0.9 / 1.4 together with Elasticsearch 7.x and pydantic 1.x — a stack that is incompatible with Python 3.10 and has been deprecated upstream (Deepset's haystack moved to `haystack-ai` 2.x with a substantially different API). Read the chapter for the concepts (retriever + reader pipelines, dense passage retrieval) and follow the current [Haystack documentation](https://docs.haystack.deepset.ai/) for runnable code.
+
 ### Running on a cloud platform
 
 To run these notebooks on a cloud platform, just click on one of the badges in the table below:

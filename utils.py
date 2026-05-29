@@ -1,6 +1,23 @@
 import logging
 import sys
 from textwrap import TextWrapper
+from urllib.parse import urljoin
+
+import requests as _requests
+
+# The HF Hub now returns relative paths in `Location` for some model files
+# (e.g. /api/resolve-cache/...). transformers==4.16.2's downloader hands that
+# raw value to requests.get, which then raises MissingSchema. Wrap requests.head
+# so any relative Location is resolved against the original URL before
+# transformers reads it.
+_orig_head = _requests.head
+def _head_with_absolute_location(url, **kw):
+    r = _orig_head(url, **kw)
+    loc = r.headers.get("Location", "")
+    if loc and not loc.startswith(("http://", "https://")):
+        r.headers["Location"] = urljoin(url, loc)
+    return r
+_requests.head = _head_with_absolute_location
 
 import datasets
 import huggingface_hub
@@ -9,6 +26,19 @@ import matplotlib.pyplot as plt
 import torch
 import transformers
 from IPython.display import set_matplotlib_formats
+
+# transformers==4.16.2's convert_graph_to_onnx still passes
+# `use_external_data_format=...` and `enable_onnx_checker=True` to
+# torch.onnx.export, both of which were removed in torch 1.11. The DistilBERT
+# model used in chapter 8 is well under the 2 GB protobuf limit, so the external
+# data format flag would have been False anyway, and the checker now runs by
+# default — so silently dropping both kwargs is a no-op for the export itself.
+_orig_onnx_export = torch.onnx.export
+def _onnx_export_drop_removed_kwargs(*args, **kwargs):
+    kwargs.pop("use_external_data_format", None)
+    kwargs.pop("enable_onnx_checker", None)
+    return _orig_onnx_export(*args, **kwargs)
+torch.onnx.export = _onnx_export_drop_removed_kwargs
 
 # TODO: Consider adding SageMaker StudioLab
 is_colab = "google.colab" in sys.modules
