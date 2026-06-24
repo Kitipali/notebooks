@@ -25,7 +25,7 @@ import matplotlib.font_manager as font_manager
 import matplotlib.pyplot as plt
 import torch
 import transformers
-from IPython.display import set_matplotlib_formats
+# from IPython.display import set_matplotlib_formats
 
 # transformers==4.16.2's convert_graph_to_onnx still passes
 # `use_external_data_format=...` and `enable_onnx_checker=True` to
@@ -54,7 +54,7 @@ def install_mpl_fonts():
 
 def set_plot_style():
     install_mpl_fonts()
-    set_matplotlib_formats("pdf", "svg")
+    # set_matplotlib_formats("pdf", "svg")
     plt.style.use("plotting.mplstyle")
     logging.getLogger("matplotlib").setLevel(level=logging.ERROR)
 
