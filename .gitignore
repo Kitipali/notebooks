@@ -130,3 +130,9 @@ dmypy.json
 
 # mac
 .DS_Store
+
+distilbert-base-uncased-finetuned-emotion/
+checkpoint-*/
+*.pt
+*.safetensors
+
