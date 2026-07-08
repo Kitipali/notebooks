@@ -136,3 +136,12 @@ checkpoint-*/
 *.pt
 *.safetensors
 
+# Hugging Face / entrenamiento
+*/checkpoint-*/
+*.bin
+*.pth
+*.ckpt
+runs/
+output/
+outputs/
+wandb/
