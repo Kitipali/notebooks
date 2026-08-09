@@ -145,3 +145,24 @@ runs/
 output/
 outputs/
 wandb/
+
+# Modelos y artefactos locales completos
+bert-base-uncased-issues-128/
+distilbert-base-uncased-distilled-clinc/
+distilbert-base-uncased-finetuned-clinc/
+pegasus-samsum/
+pegasus-samsum-final/
+onnx_models/
+mlruns/
+
+# Elasticsearch local
+elasticsearch-*/
+elasticsearch-*.tar.gz
+
+# Datasets locales
+electronics-*.json
+
+# Modelos XLM-R locales
+xlm-roberta-base-finetuned-panx-*/
+
+\# Python environments.txt
